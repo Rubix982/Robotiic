@@ -18,7 +18,6 @@ class NQueens:
     def GenerateSolutions(self):
         """Solve the n queens puzzle and print the number of solutions"""
         self.PutQueen([-1] * self.__size, 0)  
-        # print("Found", self.__solutions, "solutions.")
         return self.__solutions
 
     def PutQueen(self, positions, target_row):

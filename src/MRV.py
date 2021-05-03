@@ -31,6 +31,8 @@ class MRV:
 
         self.Preprocess()
 
+        node_path = []
+
         while True:
 
             '''
@@ -58,6 +60,8 @@ class MRV:
                 
                 # No potential node can be found anymore
                 break 
+
+            node_path.append(self.Nodes[min_node_index].name)
 
             '''
             If we come here, that means there indeed
@@ -118,6 +122,6 @@ class MRV:
             
             # A node couldn't be colored for some reason
             if self.Nodes[i].color == '':
-                return { 'succesful': False, 'nodes': final_node_list }
+                return { 'succesful': False, 'nodes': final_node_list, 'path': node_path }
 
-        return { 'successful': True, 'nodes': final_node_list }
+        return { 'successful': True, 'nodes': final_node_list, 'path': node_path }

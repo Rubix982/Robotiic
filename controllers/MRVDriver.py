@@ -21,3 +21,5 @@ def GenerateMRVGraph(Graph: nx.classes.graph.Graph, colors: list, network_edges:
     nx.draw_networkx_labels(Graph, pos)
     nx.draw_networkx_edges(Graph, pos, edgelist=network_edges, edge_color='black', arrows=True)
     plt.savefig("./assets/img/MRV.png") # save as png    
+
+    return mrv['path']

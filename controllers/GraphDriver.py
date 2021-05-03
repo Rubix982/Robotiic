@@ -34,7 +34,10 @@ def GraphDriver():
 
     colors = [ 'red', 'green', 'blue' ]
 
-    GenerateMCVGraph(G, colors, network_edges)
+    generated_node_paths = {}
 
-    GenerateMRVGraph(G, colors, network_edges)
+    generated_node_paths['mcv'] = GenerateMCVGraph(G, colors, network_edges)
 
+    generated_node_paths['mrv'] = GenerateMRVGraph(G, colors, network_edges)
+
+    return generated_node_paths

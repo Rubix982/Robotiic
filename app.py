@@ -9,9 +9,12 @@ import numpy as np
 # Local imports
 
 ## Controllers
-from controllers.GeneticDriverCode import GetGeneticDataframe
+from controllers.EightQueensController import GenerateEightQueensFrontend
 from controllers.EightQueensDriverCode import GetNQueensDataFrame
+from controllers.GeneticController import GenerateGeneticFrontend
+from controllers.GeneticDriverCode import GetGeneticDataframe
 from controllers.GraphDriver import GraphDriver
+from controllers.Aux import DisplayNodePath
 
 ## Src Files
 from src.EightQueens import NQueens
@@ -33,6 +36,7 @@ def main():
     # Uncomment the line belwo to generate the queens dataset
     # GetNQueensDataFrame()
 
+    # QUESTION 1 STARTS FROM HERE
     st.write('''
     # Exploring A Simple Genetic Algorithm
 
@@ -62,68 +66,12 @@ def main():
     times.
     ''')
 
-    df = GetGeneticData()
-    options = st.multiselect("Choose hyperparameters to graph", tuple(
-        df.columns)[0:-1])
+    GenerateGeneticFrontend(GetGeneticData())
+    # QUESTION 1 ENDS HERE
 
-    options_selected = {}
+    # --------------------------
 
-    if "PopulationSize" in options:
-        options_selected["PopulationSize"] = st.select_slider(
-            'Specify population size',
-            options=[*range(2, 16 + 1, 1)],
-            value=(
-                2,
-                4))
-
-    if "ChromosomeLength" in options:
-        options_selected["ChromosomeLength"] = st.select_slider(
-            'Specify chromosome length',
-            options=[*range(8, 14 + 1, 1)],
-            value=(
-                8,
-                12))
-
-    if "ElitismFactor" in options:
-        options_selected["ElitismFactor"] = st.select_slider(
-            'Specify elitism factor',
-            options=[*range(10, 20 + 1, 1)],
-            value=(
-                10,
-                12))
-
-    if "Iteration" in options:
-        options_selected["Iteration"] = st.select_slider(
-            'Specify iteration',
-            options=[*range(1, 10 + 1, 1)],
-            value=(
-                1,
-                5))
-    __temp_df = df.copy()
-
-    for key, value in options_selected.items():
-        __temp_df = __temp_df[__temp_df[key] >= value[0]]
-        __temp_df = __temp_df[__temp_df[key] <= value[1]]
-
-    __temp_df = __temp_df.T.reset_index()
-
-    __temp_df = pd.melt(__temp_df, id_vars=["index"]).rename(
-        columns={"index": "Variables", "variable": "Iteration", "value": "Genetic Iterations"}
-    )
-
-    st.write("### Variables vs Genetic Iterations", __temp_df.sort_index())
-
-    chart = (
-        alt.Chart(__temp_df)
-        .mark_area(opacity=0.3)
-        .encode(
-            x="Iteration:T",
-            y=alt.Y("Genetic Iterations:Q", stack=None),
-            color="Variables:N",
-        )
-    )
-    st.altair_chart(chart, use_container_width=True)
-
+    # QUESTION 2 STARTS FROM HERE
     st.write('''
     # N-Queens Using BackTracking
 
@@ -144,7 +92,7 @@ def main():
     ''')
 
     st.image(Image.open('./assets/img/1.png'),
-             caption='Sunrise by the mountains')
+             caption='Chess board')
 
     st.write('''
     Further up, when we will move forward, there might be a point where domain gets empty for any
@@ -172,54 +120,12 @@ def main():
     Below are graphs for a generated dataset
     ''')
 
-    df = GetQueensData()
+    GenerateEightQueensFrontend(GetQueensData())
+    # QUESTION 2 ENDS HERE
 
-    options = st.selectbox("Choose a hyperparameter to graph", tuple(
-        df.columns)[0:-1])
+    # --------------------------
 
-    options_selected = {}
-
-    if "Size" in options:
-        options_selected["Size"] = st.select_slider(
-            'Specify board size',
-            options=[*range(4, 8 + 1, 1)],
-            value=(
-                4,
-                8))
-
-    if "Time" in options:
-        options_selected["Time"] = st.select_slider(
-            'Specify time durat length',
-            options=[1.0e-7, 1.0e-6, 1.0e-5, 1.0e-4, 1.0e-3, 1.0e-2, 1.0e-1, 1],
-            value=(
-                1.0e-7,
-                1.0e-1))
-
-    __temp_df = df.copy()
-
-    for key, value in options_selected.items():
-        __temp_df = __temp_df[__temp_df[key] >= value[0]]
-        __temp_df = __temp_df[__temp_df[key] <= value[1]]
-
-    __temp_df = __temp_df.T.reset_index()
-
-    __temp_df = pd.melt(__temp_df, id_vars=["index"]).rename(
-        columns={"index": "Variables", "variable": "Iteration", "value": "Values"}
-    )
-
-    st.write("### Variables vs NQueens", __temp_df.sort_index())
-
-    chart = (
-        alt.Chart(__temp_df)
-        .mark_area(opacity=0.3)
-        .encode(
-            x="Iteration:T",
-            y=alt.Y("Values:Q", stack=None),
-            color="Variables:N",
-        )
-    )
-    st.altair_chart(chart, use_container_width=True) 
-
+    # QUESTION 3 STARTS FROM HERE
     st.write('''
     # Map Coloring using MRV and MCV
 
@@ -227,18 +133,23 @@ def main():
     ''')
 
     st.image(Image.open('./assets/img/2.png'),
-             caption='Sunrise by the mountains')
+             caption='Pakistan\' geographical map')
 
-    GraphDriver()
+    generated_graph_paths = GraphDriver()
 
     st.image(Image.open('./assets/img/Pakistan.png'),
         caption='Pakistan Graph Representation')
 
+    DisplayNodePath(generated_graph_paths['mrv'])
+
     st.image(Image.open('./assets/img/MRV.png'),
         caption='MRV Graph')
 
+    DisplayNodePath(generated_graph_paths['mcv'])
+
     st.image(Image.open('./assets/img/MCV.png'),
         caption='MCV Graph')
+    # QUESTION 3 STARTS FROM HERE
 
 if __name__ == '__main__':
     main()

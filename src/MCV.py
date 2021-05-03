@@ -31,6 +31,8 @@ class MCV:
 
         self.Preprocess()
 
+        node_path = []
+
         while True:
 
             '''
@@ -38,7 +40,7 @@ class MCV:
             in the below algorithm
             '''
 
-            maxx = len(self.Nodes) + 1
+            maxx = (len(self.Nodes) * -1) -1
             maxx_node_index = -1
 
             # The first part of the algorithm is the selection
@@ -46,7 +48,7 @@ class MCV:
             for i in range(0, len(self.Nodes)):
 
                 # Checking for a potential node
-                if maxx > self.Nodes[i].edges and self.Nodes[i].color == '':
+                if maxx <= self.Nodes[i].edges and self.Nodes[i].color == '':
 
                     # If a potential node is found, then
                     # select it
@@ -58,6 +60,8 @@ class MCV:
                 
                 # No potential node can be found anymore
                 break 
+
+            node_path.append(self.Nodes[maxx_node_index].name)
 
             '''
             If we come here, that means there indeed
@@ -118,6 +122,6 @@ class MCV:
             
             # A node couldn't be colored for some reason
             if self.Nodes[i].color == '':
-                return { 'succesful': False, 'nodes': final_node_list }
+                return { 'succesful': False, 'nodes': final_node_list, 'path': node_path }
 
-        return { 'successful': True, 'nodes': final_node_list }
+        return { 'successful': True, 'nodes': final_node_list, 'path': node_path }
