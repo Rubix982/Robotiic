@@ -1,4 +1,18 @@
-# Robotiic---AI-Assignment-1
+# Robotiic
+
+## Streamlit
+
+Checking if Streamlit was installed properly,
+
+```bash
+streamlit hello
+```
+
+Starting the streamlit application,
+
+```bash
+streamlit run app.py
+```
 
 ## Heroku
 
@@ -14,6 +28,41 @@ Formatting,
 
 ```bash
 autopep8 --in-place --aggressive --aggressive [filename]
+```
+
+## Pip
+
+Installing,
+
+```bash
+pip install package_name
+```
+
+Moving to `requirements.txt,
+
+```bash
+pip freeze > requirements.txt
+```
+
+## Pipenv
+
+Activating,
+
+```bash
+pipenv shell
+```
+
+Updating `Pipfile`, by moving dependencies from `requirements.txt` to `Pipfile`,
+
+```bash
+pip freeze > requirements.txt
+pipenv install -r requirements.txt
+```
+
+Updating `pipfile.lock`,
+
+```bash
+pipenv lock --pre --clear
 ```
 
 ## References
