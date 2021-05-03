@@ -4,10 +4,18 @@
 class NQueens:
     """Generate all valid solutions for the n queens puzzle"""
 
-    def __init__(self, size = 4, debug = False):
+    def __init__(self, size = 4, debug = False, positions: list = []):
         # Store the puzzle (problem) size and the number of valid solutions
         self.__size = size
         self.__solutions = 0
+
+        if positions == []:
+            self.positions = [-1] * self.__size
+        elif len(positions) != self.__size:
+            raise Exception("Length of positions passed must be equal to board size")
+        else:
+            self.positions = positions
+
         self.debug = debug
         self.board_text = ''
 
@@ -17,7 +25,7 @@ class NQueens:
 
     def GenerateSolutions(self):
         """Solve the n queens puzzle and print the number of solutions"""
-        self.PutQueen([-1] * self.__size, 0)  
+        self.PutQueen(self.positions, 0)  
         return self.__solutions
 
     def PutQueen(self, positions, target_row):
@@ -32,7 +40,6 @@ class NQueens:
             if self.debug:
                 self.DisplayBoard(positions)
             self.AddToBoardText(positions)
-            print(positions)
             self.__solutions += 1
         else:
             # For all N columns positions try to place a queen

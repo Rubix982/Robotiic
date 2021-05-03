@@ -1,19 +1,8 @@
-import matplotlib.pyplot as plt
-import streamlit as st
-from PIL import Image
-import networkx as nx
-import altair as alt
-import pandas as pd
-import numpy as np
-
 # Local imports
-
-## Controllers
+from controllers.Aux import GetGeneticData, GetQueensData, GenerateDataSetForFrontend
 from controllers.EightQueensController import EightQueensMainController
-
 from controllers.GeneticController import GeneticMainController
 from controllers.GraphController import GraphMainController
-from controllers.Aux import GetGeneticData, GetQueensData, GenerateDataSetForFrontend
 
 def main():
 
