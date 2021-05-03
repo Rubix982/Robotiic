@@ -32,6 +32,7 @@ class NQueens:
             if self.debug:
                 self.DisplayBoard(positions)
             self.AddToBoardText(positions)
+            print(positions)
             self.__solutions += 1
         else:
             # For all N columns positions try to place a queen
