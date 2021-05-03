@@ -7,10 +7,14 @@ import pandas as pd
 import numpy as np
 
 # Local imports
+
+## Controllers
 from controllers.GeneticDriverCode import GetGeneticDataframe
 from controllers.EightQueensDriverCode import GetNQueensDataFrame
-from src.EightQueens import NQueens
+from controllers.GraphDriver import GraphDriver
 
+## Src Files
+from src.EightQueens import NQueens
 
 
 def GetGeneticData():
@@ -225,27 +229,16 @@ def main():
     st.image(Image.open('./assets/img/2.png'),
              caption='Sunrise by the mountains')
 
-    G=nx.Graph()
-
-    network_edges = [('Sindh', 'Baluchistan'), ('Sindh', 'Punjab'), ('Punjab', 'Baluchistan'), ('Punjab', 'NWFP'), ('Punjab', 'Kashmir'), ('Baluchistan', 'NWFP'), ('NWFP', 'Kashmir')]
-
-    G.add_node('Sindh')
-    G.add_node('Baluchistan')
-    G.add_node('Punjab')
-    G.add_node('NWFP')
-    G.add_node('Kashmir')
-    G.add_edges_from(network_edges)
-
-    pos = nx.kamada_kawai_layout(G)
-    nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'), 
-                        node_size = 250)
-    nx.draw_networkx_labels(G, pos)
-    nx.draw_networkx_edges(G, pos, edgelist=network_edges, edge_color='black', arrows=True)
-    plt.savefig("./assets/img/Pakistan.png") # save as png
+    GraphDriver()
 
     st.image(Image.open('./assets/img/Pakistan.png'),
-        caption='Pakistan as a graph')
+        caption='Pakistan Graph Representation')
 
+    st.image(Image.open('./assets/img/MRV.png'),
+        caption='MRV Graph')
+
+    st.image(Image.open('./assets/img/MCV.png'),
+        caption='MCV Graph')
 
 if __name__ == '__main__':
     main()
