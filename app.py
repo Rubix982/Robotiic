@@ -1,21 +1,33 @@
+import matplotlib.pyplot as plt
 import streamlit as st
 from PIL import Image
+import networkx as nx
 import altair as alt
 import pandas as pd
+import numpy as np
 
 # Local imports
 from controllers.GeneticDriverCode import GetGeneticDataframe
+from controllers.EightQueensDriverCode import GetNQueensDataFrame
+from src.EightQueens import NQueens
 
 
-def GetData():
+
+def GetGeneticData():
     __temp_df = pd.read_csv("./data/genetic.csv")
     del __temp_df["Unnamed: 0"]
     return __temp_df
 
+def GetQueensData():
+    return pd.read_csv("./data/queens.csv")
 
 def main():
 
-    df = GetData()
+    # Uncomment the line below to generate the genetic dataset
+    # GetGeneticDataframe()
+
+    # Uncomment the line belwo to generate the queens dataset
+    # GetNQueensDataFrame()
 
     st.write('''
     # Exploring A Simple Genetic Algorithm
@@ -46,7 +58,7 @@ def main():
     times.
     ''')
 
-    options = []
+    df = GetGeneticData()
     options = st.multiselect("Choose hyperparameters to graph", tuple(
         df.columns)[0:-1])
 
@@ -138,6 +150,72 @@ def main():
     flow then go for making a generalized code version of n queens’ placement.
     ''')
 
+    board_size = st.text_input('Board Size', '4')
+
+    # NQueen driver code
+    queens = NQueens(int(board_size))
+
+    st.write(f'''
+    The current board size is {board_size}, and the number of solutions are {queens.GenerateSolutions()}.
+    _________________
+    ''')       
+
+    st.write(queens.board_text)
+
+    st.write('''
+    ## Graph results from dataset    
+
+    Below are graphs for a generated dataset
+    ''')
+
+    df = GetQueensData()
+
+    options = st.selectbox("Choose a hyperparameter to graph", tuple(
+        df.columns)[0:-1])
+
+    options_selected = {}
+
+    if "Size" in options:
+        options_selected["Size"] = st.select_slider(
+            'Specify board size',
+            options=[*range(4, 8 + 1, 1)],
+            value=(
+                4,
+                8))
+
+    if "Time" in options:
+        options_selected["Time"] = st.select_slider(
+            'Specify time durat length',
+            options=[1.0e-7, 1.0e-6, 1.0e-5, 1.0e-4, 1.0e-3, 1.0e-2, 1.0e-1, 1],
+            value=(
+                1.0e-7,
+                1.0e-1))
+
+    __temp_df = df.copy()
+
+    for key, value in options_selected.items():
+        __temp_df = __temp_df[__temp_df[key] >= value[0]]
+        __temp_df = __temp_df[__temp_df[key] <= value[1]]
+
+    __temp_df = __temp_df.T.reset_index()
+
+    __temp_df = pd.melt(__temp_df, id_vars=["index"]).rename(
+        columns={"index": "Variables", "variable": "Iteration", "value": "Values"}
+    )
+
+    st.write("### Variables vs NQueens", __temp_df.sort_index())
+
+    chart = (
+        alt.Chart(__temp_df)
+        .mark_area(opacity=0.3)
+        .encode(
+            x="Iteration:T",
+            y=alt.Y("Values:Q", stack=None),
+            color="Variables:N",
+        )
+    )
+    st.altair_chart(chart, use_container_width=True) 
+
     st.write('''
     # Map Coloring using MRV and MCV
 
@@ -146,6 +224,27 @@ def main():
 
     st.image(Image.open('./assets/img/2.png'),
              caption='Sunrise by the mountains')
+
+    G=nx.Graph()
+
+    network_edges = [('Sindh', 'Baluchistan'), ('Sindh', 'Punjab'), ('Punjab', 'Baluchistan'), ('Punjab', 'NWFP'), ('Punjab', 'Kashmir'), ('Baluchistan', 'NWFP'), ('NWFP', 'Kashmir')]
+
+    G.add_node('Sindh')
+    G.add_node('Baluchistan')
+    G.add_node('Punjab')
+    G.add_node('NWFP')
+    G.add_node('Kashmir')
+    G.add_edges_from(network_edges)
+
+    pos = nx.kamada_kawai_layout(G)
+    nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'), 
+                        node_size = 250)
+    nx.draw_networkx_labels(G, pos)
+    nx.draw_networkx_edges(G, pos, edgelist=network_edges, edge_color='black', arrows=True)
+    plt.savefig("./assets/img/Pakistan.png") # save as png
+
+    st.image(Image.open('./assets/img/Pakistan.png'),
+        caption='Pakistan as a graph')
 
 
 if __name__ == '__main__':
