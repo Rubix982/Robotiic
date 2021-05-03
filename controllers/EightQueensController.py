@@ -13,7 +13,7 @@ def EightQueensMainController(df: pd.DataFrame):
 
     BoardSizeInputWithResult()
 
-    SpecifyBoardColAndRow()
+    # SpecifyBoardColAndRow()
 
     GenerateEightQueensFrontend(df)
 
