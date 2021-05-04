@@ -1,5 +1,9 @@
 # Robotiic
 
+Robotiic is a Streamlit application for visualizing the results of genetic algorithms, showcasing eight queens with backtracking, and for the MCV / MRV heuristic. Inspired from "Artificial Intelligence: A Modern Approach 3rd Edition", by Stuart Russell, Peter Norvig.
+
+Check out the `Heroku` depliyment [here](robotiic.herokuapp.com/).
+
 ## Streamlit
 
 Checking if Streamlit was installed properly,
