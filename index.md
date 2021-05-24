@@ -1,37 +1,75 @@
-## Welcome to GitHub Pages
+# Robotiic
 
-You can use the [editor on GitHub](https://github.com/Rubix982/Robotiic/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Robotiic is a Streamlit application for visualizing the results of genetic algorithms, showcasing eight queens with backtracking, and for the MCV / MRV heuristic. Inspired from "Artificial Intelligence: A Modern Approach 3rd Edition", by Stuart Russell, Peter Norvig.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Check out the `Heroku` deployment [here](robotiic.herokuapp.com/), and the GitHub link [here](https://github.com/Rubix982/Robotiic).
 
-### Markdown
+## Streamlit
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Checking if Streamlit was installed properly,
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```bash
+streamlit hello
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Starting the streamlit application,
 
-### Jekyll Themes
+```bash
+streamlit run app.py
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Rubix982/Robotiic/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## Heroku
 
-### Support or Contact
+Logging,
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+```bash
+heroku logs --tail -a robotiic
+```
+
+## Autopep8
+
+Formatting,
+
+```bash
+autopep8 --in-place --aggressive --aggressive [filename]
+```
+
+## Pip
+
+Installing,
+
+```bash
+pip install package_name
+```
+
+Moving to `requirements.txt,
+
+```bash
+pip freeze > requirements.txt
+```
+
+## Pipenv
+
+Activating,
+
+```bash
+pipenv shell
+```
+
+Updating `Pipfile`, by moving dependencies from `requirements.txt` to `Pipfile`,
+
+```bash
+pip freeze > requirements.txt
+pipenv install -r requirements.txt
+```
+
+Updating `pipfile.lock`,
+
+```bash
+pipenv lock --pre --clear
+```
+
+## References
+
+- [NetworkX - Colored graphs](https://stackoverflow.com/questions/27030473/how-to-set-colors-for-nodes-in-networkx)
+- [NetworkX - Label With Edges](https://stackoverflow.com/questions/20133479/how-to-draw-directed-graphs-using-networkx-in-python)
